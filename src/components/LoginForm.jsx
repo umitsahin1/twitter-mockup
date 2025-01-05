@@ -1,10 +1,9 @@
-import axios from "axios";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { UserContext } from "../contexts/userContext";
 
 const LoginForm = () => {
-  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -21,18 +20,7 @@ const LoginForm = () => {
     var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     return re.test(str) || "Strong password giriniz.";
   }
-
-  function onSubmitFn(data) {
-    axios
-      .post("https://reqres.in/api/users", data)
-      .then((response) => {
-        toast.success("Giriş başarılı id" + response.data.id);
-        history.push("/feed");
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }
+  const { onSubmitFn } = useContext(UserContext);
 
   return (
     <div className="flex flex-col gap-4 w-96 ">

@@ -8,7 +8,7 @@ const NavMenü = () => {
       {data.map((item, index) => (
         <NavMenüItem key={index} item={item} />
       ))}
-      <div className="bg-blue-400 rounded-full p-4 text-center text-white w-52">
+      <div className="bg-blue-400 rounded-full p-4 text-center text-white w-52 ">
         Tweet
       </div>
     </div>
