@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+
 import UserFeed from "../components/UserFeed";
 
 const UserColumn = () => {

@@ -9,6 +9,8 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 const MainFeed = ({ tweetsUpdated }) => {
   const [tweets, setTweets] = useState([]);
 
+  const apiUrl = import.meta.env.VITE_API_URL;  
+
   const userId = localStorage.getItem("userId");
 
   const getProfileImage = (username) => {
@@ -21,7 +23,7 @@ const MainFeed = ({ tweetsUpdated }) => {
 
   const fetchTweets = () => {
     axios
-      .get("http://localhost:3000/twitter/api/v1/tweet", {
+      .get(`${apiUrl}/twitter/api/v1/tweet`, {
         withCredentials: true,
         headers: {
           Accept: "application/json",
@@ -49,7 +51,7 @@ const MainFeed = ({ tweetsUpdated }) => {
 
     axios
       .post(
-        `http://localhost:3000/twitter/api/v1/like/${tweetId}/${userId}`,
+        `${apiUrl}/twitter/api/v1/like/${tweetId}/${userId}`,
         {},
         { withCredentials: true }
       )
@@ -65,7 +67,7 @@ const MainFeed = ({ tweetsUpdated }) => {
 
     axios
       .post(
-        `http://localhost:3000/twitter/api/v1/retweet/${userId}/${tweetId}`,
+        `${apiUrl}/twitter/api/v1/retweet/${userId}/${tweetId}`,
         {},
         { withCredentials: true }
       )

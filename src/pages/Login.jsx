@@ -15,9 +15,11 @@ const Login = () => {
   const history = useHistory();
   const location = useLocation();
 
+  const apiUrl = import.meta.env.VITE_API_URL;  
+
   const onSubmit = (data) => {
     axios
-      .post("http://localhost:3000/twitter/api/v1/auth/login", data)
+      .post(`${apiUrl}/twitter/api/v1/auth/login`, data)
       .then((response) => {
         if (response.status === 200) {
           setIsAuthenticated(true);

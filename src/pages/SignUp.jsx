@@ -13,9 +13,11 @@ const SignUp = () => {
   } = useForm();
   const history = useHistory();
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const onSubmit = (formData) => {
     axios
-      .post("http://localhost:3000/twitter/api/v1/auth/register", formData)
+      .post(`${apiUrl}/twitter/api/v1/auth/register`, formData)
       .then((response) => {
         console.log("Başarılı:", response.data);
         setData(response.data);
@@ -25,8 +27,6 @@ const SignUp = () => {
         console.error("Hata:", error.response?.data || error.message);
       });
   };
-
-  const password = watch("password");
 
   return (
     <div>

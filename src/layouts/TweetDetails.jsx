@@ -15,6 +15,7 @@ function TweetDetails() {
   const userId = localStorage.getItem("userId");
   const history = useHistory();
   const [isLiked, setIsLiked] = useState(false);
+  const apiUrl = import.meta.env.VITE_API_URL;  
 
   const getProfileImage = (username) => {
     const hash = username.split("").reduce((acc, char) => {
@@ -37,7 +38,7 @@ function TweetDetails() {
 
   const fetchTweets = () => {
     axios
-      .get("http://localhost:3000/twitter/api/v1/tweet", {
+      .get(`${apiUrl}/twitter/api/v1/tweet`, {
         withCredentials: true,
         headers: {
           Accept: "application/json",
@@ -55,7 +56,7 @@ function TweetDetails() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/twitter/api/v1/tweet/findById/${tweetId}`, {
+      .get(`${apiUrl}/twitter/api/v1/tweet/findById/${tweetId}`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -69,7 +70,7 @@ function TweetDetails() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/twitter/api/v1/comment?tweetId=${tweetId}`, {
+      .get(`${apiUrl}/twitter/api/v1/comment?tweetId=${tweetId}`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -87,7 +88,7 @@ function TweetDetails() {
     }
     axios
       .post(
-        `http://localhost:3000/comment`,
+        `${apiUrl}/twitter/api/v1/comment`,
         { content: text, tweetId: tweetId },
         {
           headers: {
@@ -99,12 +100,9 @@ function TweetDetails() {
       .then(() => {
         setText("");
         axios
-          .get(
-            `http://localhost:3000/twitter/api/v1/comment?tweetId=${tweetId}`,
-            {
-              withCredentials: true,
-            }
-          )
+          .get(`${apiUrl}/twitter/api/v1/comment?tweetId=${tweetId}`, {
+            withCredentials: true,
+          })
           .then((response) => {
             setComments(response.data);
           })
@@ -125,7 +123,7 @@ function TweetDetails() {
 
     axios
       .post(
-        `http://localhost:3000/twitter/api/v1/like/${tweetId}/${userId}`,
+        `${apiUrl}/twitter/api/v1/like/${tweetId}/${userId}`,
         {},
         { withCredentials: true }
       )
@@ -144,7 +142,7 @@ function TweetDetails() {
 
     axios
       .post(
-        `http://localhost:3000/twitter/api/v1/retweet/${userId}/${tweetId}`,
+        `${apiUrl}/twitter/api/v1/retweet/${userId}/${tweetId}`,
         {},
         { withCredentials: true }
       )

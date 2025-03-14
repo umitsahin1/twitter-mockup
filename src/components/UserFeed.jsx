@@ -10,6 +10,7 @@ const UserFeed = () => {
   const [openComment, setOpenComment] = useState(false);
   const [comments, setComments] = useState([]);
   const userId = localStorage.getItem("userId");
+  const apiUrl = import.meta.env.VITE_API_URL;  
 
   const getProfileImage = (username) => {
     const hash = username.split("").reduce((acc, char) => {
@@ -22,16 +23,13 @@ const UserFeed = () => {
   useEffect(() => {
     if (!userId) return;
     axios
-      .get(
-        `http://localhost:3000/twitter/api/v1/tweet/findByUserId?userId=${userId}`,
-        {
-          withCredentials: true,
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .get(`${apiUrl}/twitter/api/v1/tweet/findByUserId?userId=${userId}`, {
+        withCredentials: true,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         const sortedTweets = response.data.sort((a, b) => {
           return new Date(b.created_at) - new Date(a.created_at);

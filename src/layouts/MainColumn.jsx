@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import MainFeed from "../components/MainFeed";
 import axios from "axios";
@@ -7,14 +6,13 @@ function MainColumn() {
   const [text, setText] = useState("");
   const [tweetsUpdated, setTweetsUpdated] = useState(false);
   const userId = localStorage.getItem("userId");
+  const apiUrl = import.meta.env.VITE_API_URL;  
 
   const getProfileImage = (username) => {
-   
-    const hash = username.split('').reduce((acc, char) => {
+    const hash = username.split("").reduce((acc, char) => {
       return acc + char.charCodeAt(0);
     }, 0);
-    
-  
+
     return `https://picsum.photos/seed/${hash}/200`;
   };
 
@@ -25,7 +23,7 @@ function MainColumn() {
     }
     axios
       .post(
-        `http://localhost:3000/twitter/api/v1/tweet?userId=${userId}`,
+        `${apiUrl}/twitter/api/v1/tweet?userId=${userId}`,
         JSON.stringify({ content: text }),
         {
           headers: {
@@ -57,7 +55,7 @@ function MainColumn() {
         onChange={(e) => setText(e.target.value)}
         placeholder="Neler Oluyor?"
         style={{
-          backgroundImage: `url(${getProfileImage(userId || 'anonymous')})`,
+          backgroundImage: `url(${getProfileImage(userId || "anonymous")})`,
           backgroundSize: "40px 40px",
           backgroundPosition: "10px 30px",
           backgroundRepeat: "no-repeat",
