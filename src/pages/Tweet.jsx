@@ -1,15 +1,15 @@
 import LeftColumn from "../layouts/LeftColumn";
-import MainColumn from "../layouts/MainColumn";
 import RightColumn from "../layouts/RightColumn";
+import TweetDetails from "../layouts/TweetDetails";
 
-const Feed = () => {
+const Tweet = () => {
   return (
-    <div className="flex w-10/12 mx-auto py-4">
+    <div className="flex mx-auto py-4 w-8/12">
       <LeftColumn />
-      <MainColumn />
+      <TweetDetails />
       <RightColumn />
     </div>
   );
 };
 
-export default Feed;
+export default Tweet;

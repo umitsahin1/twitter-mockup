@@ -1,15 +1,25 @@
-import { useContext } from "react";
-import { Redirect, Route } from "react-router-dom/cjs/react-router-dom.min";
-import { UserContext } from "../contexts/userContext";
+import { Route, Redirect } from 'react-router-dom';
 
-function PrivateRoute(props) {
-  const { children, ...rest } = props;
-  const { user } = useContext(UserContext);
+const PrivateRoute = ({ children, ...rest }) => {
+  const userId = localStorage.getItem('userId');
+  
   return (
     <Route
       {...rest}
-      render={() => (user ? children : <Redirect to="/login" />)}
+      render={({ location }) =>
+        userId ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location }
+            }}
+          />
+        )
+      }
     />
   );
-}
+};
+
 export default PrivateRoute;
