@@ -159,10 +159,10 @@ function TweetDetails() {
   const handeDelete = (tweetId) => {
     axios
       .delete(`${apiUrl}/twitter/api/v1/tweet/${tweetId}`, {
-        withCredentials: true
+        withCredentials: true,
       })
       .then(() => {
-        history.push('/');
+        history.push("/");
       })
       .catch((error) => {
         console.error("Silme işlemi başarısız:", error);
@@ -177,7 +177,7 @@ function TweetDetails() {
     );
 
   return (
-    <div className="w-full h-full border border-gray-600 flex flex-col text-white">
+    <div className="border border-gray-600 flex flex-col text-white w-7/12 h-screen border-r-[0.2px] border-l-[0.2px]  ">
       <div className="sticky top-0 z-10 backdrop-blur-md px-4 py-2 border border-gray-600 bg-opacity-80">
         <div className="flex items-center gap-6">
           <button

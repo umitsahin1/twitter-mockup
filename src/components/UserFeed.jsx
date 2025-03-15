@@ -5,6 +5,7 @@ import { CiBookmark } from "react-icons/ci";
 import { FaHeart, FaRegComment } from "react-icons/fa";
 import { GoUpload } from "react-icons/go";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const UserFeed = () => {
   const [tweets, setTweets] = useState([]);
@@ -12,6 +13,8 @@ const UserFeed = () => {
   const [comments, setComments] = useState([]);
   const userId = localStorage.getItem("userId");
   const apiUrl = import.meta.env.VITE_API_URL;
+
+  const history = useHistory();
 
   const getProfileImage = (username) => {
     const hash = username.split("").reduce((acc, char) => {
@@ -44,6 +47,19 @@ const UserFeed = () => {
     setOpenComment(!openComment);
   };
 
+  const handeDelete = (tweetId) => {
+    axios
+      .delete(`${apiUrl}/twitter/api/v1/tweet/${tweetId}`, {
+        withCredentials: true,
+      })
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        console.error("Silme işlemi başarısız:", error);
+      });
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {tweets.length === 0 ? (
@@ -66,7 +82,10 @@ const UserFeed = () => {
                       </h2>
                       <p className="text-gray-500">@{item.username}</p>
                     </div>
-                    <button className="p-2 rounded-full hover:bg-gray-800/50 transition-colors">
+                    <button
+                      onClick={() => handeDelete(item.id)}
+                      className="p-2 rounded-full hover:bg-gray-800/50 transition-colors"
+                    >
                       <RiDeleteBinLine />
                     </button>
                   </div>
