@@ -4,12 +4,13 @@ import { AiOutlineRetweet } from "react-icons/ai";
 import { CiBookmark } from "react-icons/ci";
 import { FaHeart, FaRegComment } from "react-icons/fa";
 import { GoUpload } from "react-icons/go";
+import { RiDeleteBinLine } from "react-icons/ri";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const MainFeed = ({ tweetsUpdated }) => {
   const [tweets, setTweets] = useState([]);
 
-  const apiUrl = import.meta.env.VITE_API_URL;  
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const userId = localStorage.getItem("userId");
 
@@ -31,6 +32,7 @@ const MainFeed = ({ tweetsUpdated }) => {
         },
       })
       .then((response) => {
+        console.log("response", response.data);
         const sortedTweets = response.data.sort((a, b) => {
           return new Date(b.createdAt) - new Date(a.createdAt);
         });
@@ -80,7 +82,7 @@ const MainFeed = ({ tweetsUpdated }) => {
       {tweets.map((item, index) => (
         <Link to={`/tweet/${item.id}`} key={index} className="block">
           <div className="flex flex-col">
-            <div className="flex">
+            <div className="flex ">
               <img
                 src={getProfileImage(item.username)}
                 className="w-10 h-10 rounded-full mx-3"
@@ -88,8 +90,19 @@ const MainFeed = ({ tweetsUpdated }) => {
               />
               <div className="flex flex-col">
                 <div>
-                  <p>{item.username}</p>
-                  <p>{item.content}</p>
+                  <div className="flex justify-between items-center w-[500px] ">
+                    <div className="flex gap-1">
+                      <h2 className="font-bold hover:underline cursor-pointer">
+                        {item.username}
+                      </h2>
+                      <p className="text-gray-500">@{item.username}</p>
+                    </div>
+                    <button className="p-2 rounded-full hover:bg-gray-800/50 transition-colors">
+                      <RiDeleteBinLine />
+                    </button>
+                  </div>
+
+                  <p className="text-xl mt-4">{item.content}</p>
                 </div>
               </div>
             </div>

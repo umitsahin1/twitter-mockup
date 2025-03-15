@@ -15,7 +15,7 @@ const Login = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const apiUrl = import.meta.env.VITE_API_URL;  
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const onSubmit = (data) => {
     axios
@@ -30,7 +30,7 @@ const Login = () => {
           localStorage.setItem("userName", userName);
           const redirectTo = location.state?.from?.pathname || "/";
           history.push(redirectTo);
-          toast.success("Giriş başarlı");
+          toast.success(`${userName} Sen bir tanesin:) Hoşgeldin`);
         }
       })
       .catch(() => {

@@ -6,6 +6,7 @@ import { GoUpload } from "react-icons/go";
 import { CiBookmark } from "react-icons/ci";
 import { AiOutlineRetweet } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 function TweetDetails() {
   const [text, setText] = useState("");
@@ -15,9 +16,14 @@ function TweetDetails() {
   const userId = localStorage.getItem("userId");
   const history = useHistory();
   const [isLiked, setIsLiked] = useState(false);
-  const apiUrl = import.meta.env.VITE_API_URL;  
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const username = localStorage.getItem("userName");
 
   const getProfileImage = (username) => {
+    if (!username) {
+      return `https://picsum.photos/200`;
+    }
     const hash = username.split("").reduce((acc, char) => {
       return acc + char.charCodeAt(0);
     }, 0);
@@ -150,6 +156,19 @@ function TweetDetails() {
       .catch((error) => console.error("Retweet işlemi başarısız:", error));
   };
 
+  const handeDelete = (tweetId) => {
+    axios
+      .delete(`${apiUrl}/twitter/api/v1/tweet/${tweetId}`, {
+        withCredentials: true
+      })
+      .then(() => {
+        history.push('/');
+      })
+      .catch((error) => {
+        console.error("Silme işlemi başarısız:", error);
+      });
+  };
+
   if (!tweets)
     return (
       <div className="flex items-center justify-center h-screen">
@@ -180,14 +199,17 @@ function TweetDetails() {
           />
           <div className="flex-1">
             <div className="flex items-center justify-between">
-              <div>
+              <div className="flex gap-1">
                 <h2 className="font-bold hover:underline cursor-pointer">
                   {tweets.username}
                 </h2>
                 <p className="text-gray-500">@{tweets.username}</p>
               </div>
-              <button className="p-2 rounded-full hover:bg-gray-800/50 transition-colors">
-                <BsThreeDots />
+              <button
+                onClick={() => handeDelete(tweetId)}
+                className="p-2 rounded-full hover:bg-gray-800/50 transition-colors"
+              >
+                <RiDeleteBinLine />
               </button>
             </div>
             <p className="mt-3 text-xl break-words">{tweets.content}</p>
@@ -238,7 +260,7 @@ function TweetDetails() {
       <div className="p-4 border border-gray-600">
         <div className="flex gap-4">
           <img
-            src={getProfileImage(userId || "anonymous")}
+            src={getProfileImage(username || "anonymous")}
             className="w-12 h-12 rounded-full"
             alt="your profile"
           />
@@ -313,13 +335,11 @@ function TweetDetails() {
                   <div className="flex items-start justify-between">
                     <div>
                       <span className="font-bold hover:underline cursor-pointer">
-                        {reply.username}
+                        {username}
                       </span>
-                      <span className="text-gray-500 ml-2">
-                        @{reply.username}
-                      </span>
+                      <span className="text-gray-500 ml-2">@{username}</span>
                       {reply.createdAt && (
-                        <span className="text-gray-500 ml-2">·</span>
+                        <span className="text-gray-500 ml-2"></span>
                       )}
                     </div>
                     <button className="p-1 rounded-full hover:bg-gray-800/50 transition-colors">

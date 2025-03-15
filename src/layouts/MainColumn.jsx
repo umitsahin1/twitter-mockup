@@ -6,7 +6,7 @@ function MainColumn() {
   const [text, setText] = useState("");
   const [tweetsUpdated, setTweetsUpdated] = useState(false);
   const userId = localStorage.getItem("userId");
-  const apiUrl = import.meta.env.VITE_API_URL;  
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const getProfileImage = (username) => {
     const hash = username.split("").reduce((acc, char) => {
@@ -49,7 +49,7 @@ function MainColumn() {
         <p className="text-lg">Takip</p>
       </div>
       <textarea
-        className="border-t-[0.2px] border-gray-500 px-14 py-8 focus:outline-none h-24 text-sm placeholder:text-2xl mb-3"
+        className="border-t-[0.2px] border-gray-500 px-14 py-8 focus:outline-none h-24 text-xl mb-3  resize-none min-h-[100px]"
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}

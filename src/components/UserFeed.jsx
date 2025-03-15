@@ -4,13 +4,14 @@ import { AiOutlineRetweet } from "react-icons/ai";
 import { CiBookmark } from "react-icons/ci";
 import { FaHeart, FaRegComment } from "react-icons/fa";
 import { GoUpload } from "react-icons/go";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 const UserFeed = () => {
   const [tweets, setTweets] = useState([]);
   const [openComment, setOpenComment] = useState(false);
   const [comments, setComments] = useState([]);
   const userId = localStorage.getItem("userId");
-  const apiUrl = import.meta.env.VITE_API_URL;  
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const getProfileImage = (username) => {
     const hash = username.split("").reduce((acc, char) => {
@@ -58,7 +59,17 @@ const UserFeed = () => {
               />
               <div className="flex flex-col">
                 <div>
-                  <p>{item.username}</p>
+                  <div className="flex justify-between items-center w-[500px] ">
+                    <div className="flex gap-1">
+                      <h2 className="font-bold hover:underline cursor-pointer">
+                        {item.username}
+                      </h2>
+                      <p className="text-gray-500">@{item.username}</p>
+                    </div>
+                    <button className="p-2 rounded-full hover:bg-gray-800/50 transition-colors">
+                      <RiDeleteBinLine />
+                    </button>
+                  </div>
                   <p>{item.content}</p>
                 </div>
               </div>

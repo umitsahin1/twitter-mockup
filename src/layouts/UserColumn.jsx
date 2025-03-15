@@ -1,9 +1,10 @@
-
 import UserFeed from "../components/UserFeed";
 
 const UserColumn = () => {
   const userId = localStorage.getItem("userId");
   const username = localStorage.getItem("userName");
+
+  console.log("sdasdasd", username);
 
   const getProfileImage = (username) => {
     const hash = username.split("").reduce((acc, char) => {
@@ -31,7 +32,7 @@ const UserColumn = () => {
       <div className="mx-8 flex flex-col gap-2">
         <div>
           <p className="font-bold text-2xl">{username || "Username"}</p>
-          <p className="text-gray-500">@{username || "username"}</p>
+          <p className="text-gray-500">@{username || "Username"}</p>
         </div>
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab optio
