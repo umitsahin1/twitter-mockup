@@ -53,7 +53,9 @@ const UserFeed = () => {
         withCredentials: true,
       })
       .then(() => {
-        history.push("/");
+        setTweets((prevTweets) =>
+          prevTweets.filter((tweet) => tweet.id !== tweetId)
+        );
       })
       .catch((error) => {
         console.error("Silme işlemi başarısız:", error);
